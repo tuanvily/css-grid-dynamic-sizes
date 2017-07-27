@@ -1,5 +1,5 @@
 $(function() {
-	let matrixSize = 6;
+	let matrixSize = 3;
 
 	let style = document.createElement("style");
 	document.head.appendChild(style);
@@ -14,18 +14,20 @@ $(function() {
 		//console.log($("#"+targetID).html());
 		if (selected !== "0") {
 			if (selected === targetID) {
-				$("#"+targetID).removeClass("selected");
+				// clicking same tile twice = highlight
+				$("#"+targetID).removeClass("selectedTile");
+				$("#"+targetID).toggleClass("highlight");
 			} else {
 				let tmp1 = $("#"+selected).html();
 				let tmp2 = $("#"+targetID).html();
-				$("#"+selected).html(tmp2).removeClass("selected");
-				$("#"+targetID).html(tmp1);
+				$("#"+selected).html(tmp2).removeClass("selectedTile");
+				$("#"+targetID).html(tmp1).removeClass("selectedTile");
 				calcSums();
 			}
 			selected = "0";
 		} else {
 			selected = targetID;
-			$("#"+targetID).addClass("selected");
+			$("#"+targetID).addClass("selectedTile");
 		}
 	}
 
@@ -106,21 +108,22 @@ $(function() {
 
 	$("#stage").append(`<div id="0">0</div>`);
 	style.sheet.insertRule(`.gridStart { grid-column-start: ${matrixSize+1}; }`, style.sheet.cssRules.length);
-	$("#0").addClass("gridStart num sum");
+	$("#0").addClass("gridStart tile sumTile");
 
 	let rowSumIndex = [];
 	let numIndex = []; // index of play-area nums (playable fields, not sum fields)
 	let rowCount = 0;
 	for (i = 1; i <= Math.pow(matrixSize + 1, 2); i++) {
 		rowCount++;
-		$("#stage").append(`<div id="${i}" class="num">${i}</div>`);
+		$("#stage").append(`<div id="${i}" class="tile">${i}</div>`);
 
 		// add sum style if field is for sum
 		if (rowCount > matrixSize || i > Math.pow(matrixSize + 1, 2) - matrixSize - 1) {
 			rowCount = 0;
-			console.log(i);
-			$("#"+i).addClass("sum");
+			//console.log(i);
+			$("#"+i).addClass("sumTile");
 		} else {
+			$("#"+i).addClass("playTile");
 			numIndex.push(i); // collecting playable fields
 			$("#"+i).click(function(i) {
 				// use i.target.innerHTML to get its value
