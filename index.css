@@ -1,0 +1,34 @@
+* {
+	border: 1px solid blue;
+}
+
+/*div[id*="Wrapper"] {
+	display: grid;
+	grid-gap: 10px;
+}*/
+
+#mainWrapper {
+	/*height: 100%;
+	width: 100%;*/
+}
+
+#stage {
+	display: grid;
+	grid-gap: 10px;
+}
+
+.num {
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+}
+
+.selected {
+	color: red;
+}
+
+.sum {
+	background: green;
+}
